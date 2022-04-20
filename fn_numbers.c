@@ -43,3 +43,36 @@ int _print_i(va_list vi)
 	count++;
 	return (count);
 }
+/**
+* _print_b - convert an integer to binary
+* @b: the list of arguments
+* Return: number of printed elment
+**/
+int _print_b(va_list b)
+{
+	unsigned int binary[32];
+	int i = 0;
+	unsigned int n = 0, count = 0;
+
+	n = va_arg(b, unsigned int);
+	if (n <= 1)
+	{
+		_putchar(n + '0');
+		count++;
+	}
+	else
+	{
+	while (n > 0)
+	{
+		binary[i] = n % 2;
+		n = n / 2;
+		i++;
+	}
+	for (i = i - 1; i >= 0; i--)
+	{
+		_putchar(binary[i] + '0');
+		count++;
+	}
+	}
+	return (count);
+}
