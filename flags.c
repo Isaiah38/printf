@@ -121,3 +121,74 @@ unsigned int octal[10];
 	}
 	return (count);
 }
+
+/**
+* _diez_x - prints input integer to an hexadecimal in lowercase with prefix 0x
+* @x: the list of arguments
+* Return: number of printed characters
+*/
+int _diez_x(va_list x)
+{
+char hex[20];
+	unsigned int count = 0, n = 0;
+	int i = 0;
+
+	n = va_arg(x, unsigned int);
+		_putchar(0 + '0');
+		count++;
+	if (n != 0)
+	{
+	_putchar('x');
+	count++;
+	}
+	while (n > 0)
+	{
+		if (n % 16 >= 10 && n % 16 <= 15)
+			hex[i] = 87 + (n % 16);
+		else
+			hex[i] = 48 + (n % 16);
+		n = n / 16;
+		i++;
+	}
+	for (--i; i >= 0; i--)
+	{
+		_putchar(hex[i]);
+		count++;
+	}
+	return (count);
+}
+/**
+* _diez_X - prints input integer to an hexadecimal in uppercase with pre 0X
+* @X: the list of arguments
+* Return: number of printed characters
+*/
+int _diez_X(va_list X)
+{
+	char hex[20];
+	unsigned int count = 0, n = 0;
+	int i = 0;
+
+	n = va_arg(X, unsigned int);
+		_putchar(0 + '0');
+		count++;
+	if (n != 0)
+	{
+	_putchar('X');
+	count++;
+	}
+	while (n > 0)
+	{
+		if (n % 16 >= 10 && n % 16 <= 15)
+			hex[i] = 55 + (n % 16);
+		else
+			hex[i] = 48 + (n % 16);
+		n = n / 16;
+		i++;
+	}
+	for (--i; i >= 0; i--)
+	{
+		_putchar(hex[i]);
+		count++;
+	}
+	return (count);
+}
