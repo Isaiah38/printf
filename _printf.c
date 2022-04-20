@@ -1,53 +1,48 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include "main.h"
 /**
- * _printf - produces output according to a format
- * @format: number of arguments passed to the function
- * Return: the resulting sum
- */
+ * _printf - prints anything
+ * @format: pointer to string that contains specifiers
+ * Return: number of characters printed
+ **/
 int _printf(const char *format, ...)
 {
-	va_list vl;
-	int i = 0, j = 0;
-	char buff[100] = {0};
-	char *str_arg;
+	unsigned int count = 0, i = 0;
+	int (*f)(va_list);
+	va_list list;
 
-	va_start(vl, format);
+	if (format == '\0')
+		return (-1);
+	va_start(list, format);
 	while (format && format[i])
 	{
-		if (format[i] == '%')
+		if (format[i] != '%')
 		{
-			i++;
-			switch (format[i])
-			{
-				/* Convert char */
-				case 'c':
-					{
-						  buff[j] = (char)va_arg(vl, int);
-						  j++;
-						break;
-					}
-					/* copy string */
-				case 's':
-					{
-						  str_arg = va_arg(vl, char*);
-						  strcpy(&buff[j], str_arg);
-						  j += strlen(str_arg);
-						break;
-					}
-			}
+			_putchar(format[i]);
+			count++;
 		}
-		else
+		else if (format[i] == '%' && format[i + 1] == '\0')
+			return (-1);
+		else if (format[i] == '\0')
+			return (count);
+		else if (format[i] == '%')
 		{
-			buff[j] = format[i];
-			j++;
+			f = getspecifier(format, i + 1);
+			i += 1;
+			if (f == NULL)
+			{
+				count += strange(format, i);
+			}
+			else
+			{
+				count = count + f(list);
+				if (format[i] == '+' || format[i] == ' ' || format[i] == '#')
+					i++;
+			}
 		}
 		i++;
 	}
-	fwrite(buff, j, 1, stdout);
-	va_end(vl);
-	return (j);
+	va_end(list);
+	return (count);
 }
